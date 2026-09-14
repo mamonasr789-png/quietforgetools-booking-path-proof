@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>OFFLINE PROOF — Art &amp; Craft Retreats booking-path repair (not live)</title>
+<meta name="robots" content="noindex,nofollow" />
+<style>
+  body{font-family:system-ui,sans-serif;max-width:920px;margin:2rem auto;padding:0 1rem;line-height:1.45;color:#111}
+  .banner{background:#111;color:#fff;padding:0.75rem 1rem;border-radius:8px;margin-bottom:1.5rem}
+  .banner strong{color:#fbbf24}
+  h1{font-size:1.35rem}
+  h2{font-size:1.1rem;margin-top:1.75rem}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  @media(max-width:700px){.grid{grid-template-columns:1fr}}
+  .card{border:1px solid #ddd;border-radius:10px;padding:1rem;background:#fafafa}
+  .before{border-color:#f87171;background:#fef2f2}
+  .after{border-color:#4ade80;background:#f0fdf4}
+  .label{font-size:0.75rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.5rem}
+  .before .label{color:#b91c1c}
+  .after .label{color:#15803d}
+  code,pre{font-family:ui-monospace,monospace;font-size:0.82rem}
+  pre{white-space:pre-wrap;background:#fff;border:1px solid #e5e5e5;padding:.75rem;border-radius:6px}
+  .btn{display:inline-block;padding:.55rem 1rem;border-radius:6px;text-decoration:none;font-weight:600}
+  .btn-bad{background:#111;color:#fff;opacity:.85}
+  .btn-good{background:#0f766e;color:#fff}
+  .note{font-size:0.9rem;color:#444}
+  .warn{background:#fffbeb;border:1px solid #f59e0b;padding:.75rem 1rem;border-radius:8px;margin:1rem 0}
+</style>
+</head>
+<body>
+  <div class="banner"><strong>Offline repair demonstration — not the live website.</strong> QuietForgeTools artifact only. Not hosted on artandcraftretreats.co.uk. Their live site was not modified. No trackers. No analytics claims. Not a client case study.</div>
+
+  <h1>Proof artifact — restore one broken booking path</h1>
+  <p class="note">Prospect: The Art and Craft Retreats Company · <code>artandcraftretreats.co.uk</code><br/>
+  Revalidated publicly 2026-09-14 ~01:15 UK · Defect status: <strong>LIVE</strong></p>
+
+  <div class="warn"><strong>One problem in focus:</strong> Homepage “View Details” for <em>Nature Sketching &amp; Painting Retreat</em> (Bath, 2–4 Oct 2026) still points to
+  <code>/event/nature-sketching-painting-retreat/</code>, which returns <strong>HTTP 404</strong> (probed twice). Sibling events (e.g. Luxury Artists Retreat) already resolve <strong>HTTP 200</strong> — so the site’s event pattern works; this one URL is missing/unpublished.</div>
+
+  <h2>1) Homepage CTA — before → after</h2>
+  <div class="grid">
+    <div class="card before">
+      <div class="label">Before (live behaviour, 2026-09-14)</div>
+      <p>Nature Sketching card → View Details</p>
+      <a class="btn btn-bad" href="#">View Details</a>
+      <pre>href = https://artandcraftretreats.co.uk/event/nature-sketching-painting-retreat/
+
+Public result: HTTP 404 / 404
+(page can’t be found)</pre>
+    </div>
+    <div class="card after">
+      <div class="label">After (proposed repair — offline mock)</div>
+      <p>Same CTA label; destination works again.</p>
+      <a class="btn btn-good" href="#mock-event">View Details</a>
+      <pre>Keep the same slug IF the Events Calendar post is
+re-published (status: publish), matching the working
+sibling pattern:
+/event/luxury-artists-retreat-november-2026-bailbrook-house-bath/ → 200
+
+Temporary safe retarget (if event not ready yet):
+href → /events/list/
+so guests never hit a 404.</pre>
+    </div>
+  </div>
+
+  <h2 id="mock-event">2) Minimal restored event page (offline mock)</h2>
+  <div class="card after">
+    <div class="label">After — mock of a working event detail (not live HTML from their server)</div>
+    <h3 style="margin:.25rem 0">Nature Sketching &amp; Painting Retreat</h3>
+    <p>Bailbrook House, Bath · 2nd – 4th October 2026 · from £829</p>
+    <p>This page would be a normal The Events Calendar single event (same stack already powering Luxury Artists / Luxury Sewing on the live site). Content fields already used on the homepage card can populate title, dates, and location — no redesign required.</p>
+    <p><a class="btn btn-good" href="mailto:enquiries@artandcraftretreats.co.uk">Enquire / reserve</a>
+       <span class="note"> (uses their published address — not contact@example.com)</span></p>
+  </div>
+
+  <h2>3) Related LIVE defects (same repair engagement — not claimed fixed here)</h2>
+  <ul class="note">
+    <li>WooCommerce deposit/package URLs still <strong>HTTP 500</strong> with WordPress critical error (Luxury Artists deposit; Stitch by the Sea £729 full package; related deposits). Offline proof cannot safely reproduce a live Woo fix without admin access — repair = diagnose fatal (plugin/theme), restore product, smoke-test Add to cart.</li>
+    <li>Nav “COMING SOON - ONLINE BOOKINGS” still links to <code>gaviaspreview.com</code> Tevily theme demo (HTTP 403). Correct target: their own <code>/events/</code> (HTTP 200).</li>
+    <li><code>mailto:contact@example.com</code> placeholder still present beside the real enquiries@ address.</li>
+  </ul>
+
+  <h2>4) What “done” looks like (acceptance)</h2>
+  <ol class="note">
+    <li>Nature Sketching View Details → HTTP 200 event page (or intentional /events/ list), twice.</li>
+    <li>Named Woo deposit/package URLs no longer critical-error 500; product page loads.</li>
+    <li>Bookings CTA no longer leaves the domain for gaviaspreview.</li>
+    <li>Example.com mailto removed from public markup.</li>
+  </ol>
+
+  <p class="note"><em>QuietForgeTools · offline demonstration for a proposed £299 booking-path reconnect + smoke test · contact mamonasr789@gmail.com · async only</em></p>
+</body>
+</html>
